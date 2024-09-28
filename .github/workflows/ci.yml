@@ -1,0 +1,62 @@
+---
+name: Continuous Integration Workflow
+
+# This workflow is triggered whenever a new PR is created on the main branch
+on:
+  workflow_dispatch:
+  # pull_request:
+  #   branches:
+  #     - main
+  #   paths:
+  #     - 'python-api/**'
+  # push:
+  #   branches:
+  #     - main
+  #   paths:
+  #     - 'python-api/**'
+
+permissions:
+  contents: read
+  statuses: write
+
+jobs:
+
+  # Run unit tests to make sure everything is good
+  test:
+    name: 'Run unit tests'
+    defaults:
+      run:
+        shell: bash
+        # Define the working directory for all run steps in the workflow
+        working-directory: ./python-api
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        name: 'Checkout repository'
+
+      - name: 'Install requirements'
+        run: pip3 install -r requirements.txt
+
+      - name: 'Install pytest'
+        run: pip3 install pytest
+      
+      - name: 'Run Tests'
+        run: pytest
+
+  lint:
+    name: 'Run super-linter'
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout repository'
+        uses: actions/checkout@v4
+
+      - name: 'Run linter'
+        uses: super-linter/super-linter@v7
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BRANCH: main
+          VALIDATE_PYTHON_PYLINT: true
+          VALIDATE_PYTHON_FLAKE8: true
+          VALIDATE_YAML: true
+          
