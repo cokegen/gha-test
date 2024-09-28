@@ -11,4 +11,4 @@ def test_read_main():
     """This tests the main message"""
     response = client.get("/")
     assert response.status_code == 200
-    assert response.json() == {"msg": "Hello World 4"}
+    assert response.json() == {"msg": "Hello World 5"}

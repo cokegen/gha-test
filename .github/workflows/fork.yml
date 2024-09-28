@@ -1,0 +1,26 @@
+name: "Forking test"
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'python-api/**'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'python-api/**'
+
+jobs:
+
+  runforktest:
+    name: 'Run fork test'
+    defaults:
+      run:
+        shell: bash
+        # Define the working directory for all run steps in the workflow
+        working-directory: ./python-api
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'dummy step'
+        run: echo "this is a step running and doing something !!!"
+
