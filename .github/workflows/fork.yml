@@ -17,8 +17,6 @@ jobs:
     defaults:
       run:
         shell: bash
-        # Define the working directory for all run steps in the workflow
-        working-directory: ./python-api
     runs-on: ubuntu-latest
     steps:
       - name: 'dummy step'
