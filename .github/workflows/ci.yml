@@ -59,12 +59,3 @@ jobs:
           VALIDATE_PYTHON_PYLINT: true
           VALIDATE_PYTHON_FLAKE8: true
           VALIDATE_YAML: true
-
-  secretmask:
-    name: 'Secret masking test'
-    runs-on: ubuntu-latest
-    steps:
-      - name: 'masking test'
-        run: |
-          echo ${{ secrets.GITHUB_TOKEN }} > /tmp/somefile
-          cat /tmp/somefile
